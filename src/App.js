@@ -8,6 +8,7 @@ import axios from 'axios';
 import Loader from "./messagepopup/loader";
 import Snackbar from "./messagepopup/snackbar";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -27,6 +28,8 @@ function App() {
     setSnackbar(false)
   }
 
+  axios.defaults.withCredentials = true
+  axios.defaults.headers.common["Access-Control-Allow-Credentials"] = true
 
   axios.interceptors.request.use(
     (config) => {
@@ -36,7 +39,6 @@ function App() {
     (error) => {
       setLoading(false);
       setSnackbar(true);
-      localStorage.removeItem('token')
       return Promise.reject(error);
     }
   );
@@ -49,11 +51,14 @@ function App() {
     },
     (error) => {
       setLoading(false);
-      setSnackbar(true)
-      localStorage.removeItem('token')
+      setSnackbar(true);
+      if (error.response.status === 401) {
+        window.location.href = '/';
+      }
       return Promise.reject(error);
     }
   );
+
 
   return (
     <QueryClientProvider client={queryClient}>
