@@ -12,29 +12,20 @@ import Budget from "./budget/budget";
 export default function Dashboard(props) {
 
     var [navOpen, setnavOpen] = useState(true)
-    var [token, setToken] = useState(localStorage.getItem('token'))
-    const navigate = useNavigate();
+
 
     const changeVisibility = () => {
         setnavOpen(!navOpen)
     }
 
-    const changeToken = (val) => {
-        setToken(val)
-    }
+
 
     const elementMapper = {
-        'dashboard': <Content tokenhandle={changeToken}></Content>,
+        'dashboard': <Content></Content>,
         'expense': <Expense></Expense>,
         'income': <Income></Income>,
         'budget': <Budget></Budget>
     }
-
-    useEffect(() => {
-        if (!token) {
-            navigate('/')
-        }
-    })
 
 
     return (

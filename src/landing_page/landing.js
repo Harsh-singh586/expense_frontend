@@ -1,6 +1,7 @@
 import Brand from "./brand";
 import Login from "./login";
-export default function Landing() {
+import { memo } from "react";
+function Landing() {
 
     return (
         <div className="h-full grid grid-cols-1 md:grid-cols-2 ">
@@ -13,3 +14,5 @@ export default function Landing() {
         </div>
     )
 }
+
+export default memo(Landing);
