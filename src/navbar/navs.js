@@ -1,8 +1,19 @@
 import { ChartPieIcon, ChartBarSquareIcon, WalletIcon, CurrencyDollarIcon } from '@heroicons/react/24/solid'
 import { useNavigate } from 'react-router-dom'
+import { baseUrl } from '../settings';
 
 export default function Navs(props) {
     const navigate = useNavigate()
+    const logout = () => {
+        localStorage.removeItem('email')
+        localStorage.removeItem('username')
+        localStorage.removeItem('name')
+        localStorage.removeItem('profile_picture')
+        let url = baseUrl + "/auth/logout"
+        window.open(url, "_self");
+        navigate('/')
+
+    };
     return (
         <div className='space-y-4 mt-5'>
             <div className='flex justify-start space-x-4 cursor-pointer' onClick={() => navigate('/dashboard')}>
@@ -21,10 +32,7 @@ export default function Navs(props) {
                 <CurrencyDollarIcon className='h-7 w-7 text-slate-400'></CurrencyDollarIcon>
                 <h1 className={`text-[20px] ${props.currLoc === 'budget' ? 'font-bold' : ''}`}>Budget</h1>
             </a>
-            <a className='flex space-x-4 cursor-pointer' onClick={() => {
-                localStorage.removeItem('token')
-                navigate('/')
-            }}>
+            <a className='flex space-x-4 cursor-pointer' onClick={logout}>
                 <CurrencyDollarIcon className='h-7 w-7 text-slate-400'></CurrencyDollarIcon>
                 <h1 className='text-[20px]'>Sign Out</h1>
             </a>
